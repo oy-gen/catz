@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+design/
+
+# Environment files
+*.env*
+
+# IDE settings
+.idea/
+
+# macOS system files
+.DS_Store
+
+# Log files
+*.log
