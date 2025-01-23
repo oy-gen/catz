@@ -5,7 +5,7 @@ import { fetchCats } from "../../api/services/fetchCats.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 
 export const useFetchCats = (): CatData => {
-  const { cats, saveCatsToStore, filters, page } = useCatsStore();
+  const { cats, saveCatsToStore, filters, currentPage } = useCatsStore();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -13,18 +13,22 @@ export const useFetchCats = (): CatData => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const rawData = await fetchCats(page, filters);
+        const rawData = await fetchCats(currentPage, filters);
         const parsedData = parseRawData(rawData);
         saveCatsToStore(parsedData);
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "An unknown error occurred",
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching cats",
         );
       }
     };
     fetchData();
     setIsLoading(false);
-  }, []);
+    // here I only listen to pageChange since filter changes will also trigger a page reset
+  }, [currentPage]);
+
   return { cats, error, isLoading };
 };
 

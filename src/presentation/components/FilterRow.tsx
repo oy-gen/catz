@@ -4,19 +4,22 @@ import { FilterEnum } from "../../business/models/FilterType.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 
 export const FilterRow: React.FC = () => {
-  const { filters, saveFiltersToStore, resetFilters } = useCatsStore();
+  const { filters, saveFiltersToStore, resetFilters, saveCurrentPage } =
+    useCatsStore();
 
   const handleToggleFilter = (filterName: FilterEnum) => {
     if (filterName === FilterEnum.All) {
       resetFilters();
       return;
     }
-    // can handle several active filters
+    // handles several active filters
     saveFiltersToStore({
       ...filters,
       [FilterEnum.All]: false,
       [filterName]: !filters[filterName],
     });
+    // reset currentPage on filter change
+    saveCurrentPage(1);
   };
 
   return (

@@ -4,7 +4,8 @@ import { Filters } from "../business/models/FilterType.ts";
 export interface CatsStoreState {
   cats: Cat[];
   filters: Filters;
-  page: number;
+  currentPage: number;
+  saveCurrentPage: (page: number) => void;
   catImages: CatImageData[];
   saveCatsToStore: (cats: Cat[]) => void;
   saveCatImageToStore: (catImageData: CatImageData) => void;

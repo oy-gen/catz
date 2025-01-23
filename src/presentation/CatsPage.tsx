@@ -3,12 +3,14 @@ import React from "react";
 import styled from "styled-components";
 import { FilterRow } from "./components/FilterRow.tsx";
 import { CatTilesGrid } from "./components/CatTilesGrid.tsx";
+import { Pagination } from "./components/Pagination.tsx";
 
 export const CatsPage: React.FC = () => {
   return (
     <PageLayout>
       <FilterRow />
       <CatTilesGrid />
+      <Pagination />
     </PageLayout>
   );
 };

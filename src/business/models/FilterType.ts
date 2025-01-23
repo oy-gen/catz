@@ -1,8 +1,8 @@
 export enum FilterEnum {
-  All = "All",
-  Black = "Black",
-  White = "White",
-  Orange = "Orange",
+  All = "all",
+  Black = "black",
+  White = "white",
+  Orange = "orange",
 }
 
 export type Filters = Record<FilterEnum, boolean>;

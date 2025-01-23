@@ -9,12 +9,14 @@ export const useCatsStore = create<CatsStoreState>()(
   devtools(
     (set): CatsStoreState => ({
       cats: [],
-      page: 1,
+      currentPage: 1,
       filters: filtersInitialState,
       catImages: [],
       saveCatsToStore: (cats: Cat[]) => {
-        console.log({ cats });
         set((state) => ({ ...state, cats: [...cats] }));
+      },
+      saveCurrentPage: (page: number) => {
+        set((state) => ({ ...state, currentPage: page }));
       },
       saveFiltersToStore: (filters: Filters) => {
         set((state) => ({
@@ -36,7 +38,7 @@ export const useCatsStore = create<CatsStoreState>()(
       },
     }),
     {
-      name: "AppStore",
+      name: "Redux DevTools",
       enabled: true,
     },
   ),
