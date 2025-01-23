@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { FilterEnum } from "../../business/models/FilterType.ts";
+import { FilterEnum } from "../../business/models/Filters.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 
 export const FilterRow: React.FC = () => {
@@ -42,16 +42,17 @@ export const FilterRow: React.FC = () => {
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
 `;
 
 const Button = styled.button<{ $active: boolean }>`
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   font-weight: bold;
-  border: 2px solid ${(props) => (props.$active ? "blue" : "white")};
+  border: 2px solid ${(props) => (props.$active ? "#4886a6" : "#c8c8c8")};
   border-radius: 0.5rem;
-  background-color: #c8c8c8;
-  color: #6a6a6a;
+  background-color: ${(props) => (props.$active ? "#dcdcdc" : "white")};
+  color: #3e3e3e;
   cursor: pointer;
   transition: background-color 0.25s;
 

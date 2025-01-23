@@ -1,4 +1,4 @@
-import { FilterEnum, Filters } from "../business/models/FilterType.ts";
+import { FilterEnum, Filters } from "../business/models/Filters.ts";
 
 export const filtersInitialState: Filters = {
   [FilterEnum.All]: true,

@@ -1,6 +1,6 @@
-import { CatRawModel } from "../models/CatRawModel.ts";
+import { CatRawModel } from "./models/CatRawModel.ts";
 import axios from "axios";
-import { Filters } from "../../business/models/FilterType.ts";
+import { Filters } from "../business/models/Filters.ts";
 
 export const fetchCats = async (
   page: number,

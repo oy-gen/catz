@@ -2,12 +2,13 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { CatsStoreState } from "./CatsStoreState.ts";
 import { filtersInitialState } from "./filterInitialState.ts";
-import { Cat, CatImageData } from "../business/models/CatModel.ts";
-import { Filters } from "../business/models/FilterType.ts";
+import { Cat } from "../business/models/Cat.ts";
+import { Filters } from "../business/models/Filters.ts";
+import { CatImage } from "../business/models/CatImage.ts";
 
 export const useCatsStore = create<CatsStoreState>()(
   devtools(
-    (set): CatsStoreState => ({
+    (set, get): CatsStoreState => ({
       cats: [],
       currentPage: 1,
       filters: filtersInitialState,
@@ -24,11 +25,16 @@ export const useCatsStore = create<CatsStoreState>()(
           filters: { ...filters },
         }));
       },
-      saveCatImageToStore: (catImageData: CatImageData) => {
+      saveCatImageToStore: (catImage: CatImage) => {
         set((state) => ({
           ...state,
-          catImages: [...state.catImages, catImageData],
+          catImages: [...state.catImages, catImage],
         }));
+      },
+      getCatImageById: (id: string) => {
+        const catImages: CatImage[] = get().catImages;
+        const result = catImages.find((catImageData) => catImageData[id]);
+        return result ? result[id] : null;
       },
       resetFilters: () => {
         set((state) => ({

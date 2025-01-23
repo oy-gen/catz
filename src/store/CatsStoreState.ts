@@ -1,14 +1,16 @@
-import { Cat, CatImageData } from "../business/models/CatModel.ts";
-import { Filters } from "../business/models/FilterType.ts";
+import { Cat } from "../business/models/Cat.ts";
+import { Filters } from "../business/models/Filters.ts";
+import { CatImage } from "../business/models/CatImage.ts";
 
 export interface CatsStoreState {
   cats: Cat[];
   filters: Filters;
   currentPage: number;
+  getCatImageById: (id: string) => string | null;
   saveCurrentPage: (page: number) => void;
-  catImages: CatImageData[];
+  catImages: CatImage[];
   saveCatsToStore: (cats: Cat[]) => void;
-  saveCatImageToStore: (catImageData: CatImageData) => void;
+  saveCatImageToStore: (catImage: CatImage) => void;
   saveFiltersToStore: (filters: Filters) => void;
   resetFilters: () => void;
 }
