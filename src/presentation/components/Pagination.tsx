@@ -3,7 +3,7 @@ import { useCatsStore } from "../../store/useCatsStore.ts";
 
 export const Pagination: React.FC = memo(() => {
   // quick and dirty implementation, no styling
-  // we should actually prefetch entries count for good pagination. no time
+  // should prefetch count for good pagination. no time
   const { currentPage, saveCurrentPage } = useCatsStore();
   const handleDecrement = () => {
     if (currentPage < 2) {

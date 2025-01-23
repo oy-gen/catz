@@ -16,11 +16,11 @@ export const CatsPage: React.FC = () => {
 };
 
 const PageLayout = styled.main`
-  margin: 0 auto;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem 1rem;
-  max-width: 800px; // could change max-width to some breakpoint, later
+  padding: 2rem 2rem;
+  max-width: 800px;
   position: relative;
 `;
