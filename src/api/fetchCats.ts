@@ -1,14 +1,19 @@
-import { CatRawModel } from "./models/CatRawModel.ts";
+import { ResponseDataItem } from "./models/ResponseDataItem.ts";
 import axios from "axios";
 import { Filters } from "../business/models/Filters.ts";
 
 export const fetchCats = async (
   page: number,
   filters?: Filters,
-): Promise<CatRawModel[]> => {
-  const url = buildFetchCatsUrl(page, filters);
-  const response = await axios.get(url);
-  return response.data;
+): Promise<ResponseDataItem[]> => {
+  try {
+    const url = buildFetchCatsUrl(page, filters);
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cats:", error);
+    throw error;
+  }
 };
 
 const buildFetchCatsUrl = (page: number, filters?: Filters): string => {

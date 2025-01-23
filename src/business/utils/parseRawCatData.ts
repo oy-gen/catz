@@ -1,7 +1,7 @@
-import { CatRawModel } from "../../api/models/CatRawModel.ts";
+import { ResponseDataItem } from "../../api/models/ResponseDataItem.ts";
 import { Cat } from "../models/Cat.ts";
 
-export const parseRawCatData = (response: CatRawModel[]): Cat[] => {
+export const parseRawCatData = (response: ResponseDataItem[]): Cat[] => {
   const baseUrl: string = "https://cataas.com/cat/";
   const imageFormat: string = "?type=square&position=center";
   return response.map((cat): Cat => {

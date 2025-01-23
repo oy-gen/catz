@@ -1,4 +1,4 @@
-export interface CatRawModel {
+export interface ResponseDataItem {
   _id: string;
   mimetype: string;
   size: number;
