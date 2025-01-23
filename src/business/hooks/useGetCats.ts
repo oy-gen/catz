@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Cat } from "../models/Cat.ts";
 import { fetchCats } from "../../api/fetchCats.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
@@ -13,27 +13,30 @@ export const useGetCats = (): {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const rawData = await fetchCats(currentPage, filters);
-        const parsedData = parseRawCatData(rawData);
-        saveCatsToStore(parsedData);
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "An error occurred while fetching cats",
-        );
-        setIsLoading(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+  const fetchData = useCallback(async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const rawData = await fetchCats(currentPage, filters);
+      const parsedData = parseRawCatData(rawData);
+      saveCatsToStore(parsedData);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An error occurred while fetching cats",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }, [currentPage, filters]);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      fetchData();
+    }, 300);
+
+    return () => clearTimeout(debounce);
+  }, [fetchData]);
 
   return { cats, error, isLoading };
 };
