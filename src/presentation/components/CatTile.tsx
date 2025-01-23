@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import React, { useMemo, useState } from "react";
 import { Cat } from "../../business/models/Cat.ts";
-import { useCatsStore } from "../../store/useCatsStore.ts";
-import { FilterEnum } from "../../business/models/Filters.ts";
+import { FilterEnum } from "../../business/models/FilterEnum.ts";
 import { Modal } from "./Modal.tsx";
 import { ModalCatContent } from "./ModalCatContent.tsx";
 
@@ -12,29 +11,27 @@ interface Props {
 
 export const CatTile: React.FC<Props> = ({ cat }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { filters } = useCatsStore();
 
   const firstMatchingTag: string | null = useMemo(
     () =>
       cat.tags.find((tag) =>
         Object.values(FilterEnum).includes(tag as FilterEnum),
       ) ?? null,
-    [filters],
+    [cat.tags],
   );
 
   return (
     <>
       <Tile key={cat.id} onClick={() => setIsModalOpen(true)} $image={cat.url}>
-        <Chip $type={"size"}>{cat.size}</Chip>
-        {/*<img id={cat.id} src={cat.url} alt={cat.id} loading="lazy" />*/}
-        {firstMatchingTag && <Chip $type={"tag"}>{firstMatchingTag}</Chip>}
+        <Chip className="size">{cat.imageSize}</Chip>
+        {firstMatchingTag && <Chip className="tag">{firstMatchingTag}</Chip>}
       </Tile>
       {isModalOpen && (
         <Modal>
           <ModalCatContent
             id={cat.id}
             tag={firstMatchingTag}
-            size={cat.size}
+            size={cat.imageSize}
             onClose={() => setIsModalOpen(false)}
           />
         </Modal>
@@ -44,7 +41,7 @@ export const CatTile: React.FC<Props> = ({ cat }) => {
 };
 
 const Tile = styled.li<{ $image: string }>`
-  border-radius: 2rem;
+  border-radius: 1rem;
   background-image: url(${(props) => props.$image});
   background-size: cover;
   background-position: center;
@@ -54,15 +51,21 @@ const Tile = styled.li<{ $image: string }>`
   width: 100%;
   padding-top: 100%; /* This makes the element square */
 `;
-const Chip = styled.div<{ $type: "tag" | "size" }>`
+
+const Chip = styled.div`
   border-radius: 0.2rem;
+  padding: 0.2rem 0.5rem;
   position: absolute;
-  ${(props) =>
-    props.$type === "size"
-      ? "left: 0.5rem; top: 0.5rem;"
-      : "right: 0.5rem; bottom: 0.5rem;"}
-  right: 0.5rem;
-  bottom: 0.5rem;
   background-color: black;
   color: white;
+
+  &.size {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+
+  &.tag {
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
 `;

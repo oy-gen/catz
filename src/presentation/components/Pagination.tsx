@@ -1,16 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 
-export const Pagination: React.FC = () => {
+export const Pagination: React.FC = memo(() => {
   // quick and dirty implementation, no styling
   // we should actually prefetch entries count for good pagination. no time
   const { currentPage, saveCurrentPage } = useCatsStore();
-
   const handleDecrement = () => {
     if (currentPage < 2) {
       return;
     }
-    store.set;
     saveCurrentPage(currentPage - 1);
   };
 
@@ -25,4 +23,4 @@ export const Pagination: React.FC = () => {
       <button onClick={handleIncrement}>+</button>
     </div>
   );
-};
+});

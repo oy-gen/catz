@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { buildFullImageUrl } from "../../business/utils/buildFullImageUrl.ts";
 import styled from "styled-components";
+import { Loading } from "./LoadingStyle.ts";
 
 interface Props {
   id: string;
@@ -15,31 +16,44 @@ export const ModalCatContent: React.FC<Props> = ({
   size,
   onClose,
 }) => {
-  const imageWidth = window.innerWidth - 200; // dirty, 2x100px padding
+  const imageWidth = window.innerWidth - 200; // very dirty, 2x100px padding
   const imageHeight = window.innerHeight - 200;
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const url: string = buildFullImageUrl(id, imageWidth, imageHeight);
+  const url = useMemo(
+    () => buildFullImageUrl(id, imageWidth, imageHeight),
+    [id, imageWidth, imageHeight],
+  );
 
   return (
     <>
-      {isImageLoading && <p>Loading ...</p>}
-      <Content style={{ display: isImageLoading ? "none" : "block" }}>
+      <Content>
         <ChipRow>
           <InfoWrapper>
-            <Chip $color={"black"}>{tag}</Chip>
-            <Chip $color={"black"}>{size}</Chip>
+            {tag && <Chip>{tag}</Chip>}
+            {size && <Chip>{size}</Chip>}
           </InfoWrapper>
-          <Chip $color={"red"} onClick={onClose}>
+          <Chip $isRed={true} onClick={onClose}>
             x Close
           </Chip>
         </ChipRow>
-        <Image src={url} alt="cat" onLoad={() => setIsImageLoading(false)} />
+        {isImageLoading && <Loading>Loading ...</Loading>}
+        <Image
+          src={url}
+          alt="cat"
+          onLoad={() => setIsImageLoading(false)}
+          onError={() => {
+            onClose();
+            console.error("Image failed to load");
+          }}
+          $isLoaded={!isImageLoading}
+        />
       </Content>
     </>
   );
 };
+
 const Content = styled.div`
-  border-radius: 2rem;
+  border-radius: 1rem;
   position: relative;
   margin: 2rem;
 `;
@@ -47,6 +61,7 @@ const Content = styled.div`
 const ChipRow = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
 `;
 
 const InfoWrapper = styled.div`
@@ -54,14 +69,15 @@ const InfoWrapper = styled.div`
   gap: 1rem;
 `;
 
-const Chip = styled.div<{ $color: "red" | "black" }>`
-  padding: 1rem 2rem;
-  border-radius: 0.5rem;
+const Chip = styled.div<{ $isRed?: boolean }>`
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.2rem;
   color: white;
-  background-color: ${(props) => (props.$color === "red" ? "red" : "black")};
-  ${(props) => (props.$color === "red" ? "cursor: pointer" : "")};
+  background-color: ${(props) => (props.$isRed ? "red" : "black")};
+  ${(props) => (props.$isRed ? "cursor: pointer" : "")};
 `;
 
-const Image = styled.img`
-  border-radius: 2rem;
+const Image = styled.img<{ $isLoaded: boolean }>`
+  display: ${(props) => (props.$isLoaded ? "block" : "none")};
+  border-radius: 0.5rem;
 `;

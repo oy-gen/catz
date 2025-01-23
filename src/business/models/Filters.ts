@@ -1,8 +1,3 @@
-export enum FilterEnum {
-  All = "all",
-  Black = "black",
-  White = "white",
-  Orange = "orange",
-}
+import { FilterEnum } from "./FilterEnum.ts";
 
 export type Filters = Record<FilterEnum, boolean>;

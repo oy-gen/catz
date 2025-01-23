@@ -9,7 +9,7 @@ export const useGetCats = (): {
   error: string | null;
   isLoading: boolean;
 } => {
-  const { cats, saveCatsToStore, filters, currentPage } = useCatsStore();
+  const { cats, saveCats, filters, currentPage } = useCatsStore();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -18,7 +18,7 @@ export const useGetCats = (): {
       setIsLoading(true);
       const rawData = await fetchCats(currentPage, filters);
       const parsedData = parseRawCatData(rawData);
-      saveCatsToStore(parsedData);
+      saveCats(parsedData);
     } catch (err) {
       setError(
         err instanceof Error

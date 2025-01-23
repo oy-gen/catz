@@ -9,7 +9,7 @@ export const parseRawCatData = (response: ResponseDataItem[]): Cat[] => {
       id: cat._id,
       url: baseUrl + cat._id + imageFormat,
       tags: cat.tags,
-      size: cat.size, // need to parse to kb, no time
+      imageSize: cat.size, // need to parse to kb, no time
     };
   });
 };

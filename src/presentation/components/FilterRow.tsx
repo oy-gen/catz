@@ -1,37 +1,39 @@
 import styled from "styled-components";
-import React from "react";
-import { FilterEnum } from "../../business/models/Filters.ts";
+import React, { useCallback, useMemo } from "react";
+import { FilterEnum } from "../../business/models/FilterEnum.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 
 export const FilterRow: React.FC = () => {
-  const { filters, saveFiltersToStore, resetFilters, saveCurrentPage } =
+  const { filters, saveFilters, resetFilters, saveCurrentPage } =
     useCatsStore();
+  const filterKeys: string[] = useMemo(() => Object.keys(filters), [filters]);
 
-  const handleToggleFilter = (filterName: FilterEnum) => {
-    if (filterName === FilterEnum.All) {
-      resetFilters();
-      return;
-    }
-    // handles several active filters
-    saveFiltersToStore({
-      ...filters,
-      [FilterEnum.All]: false,
-      [filterName]: !filters[filterName],
-    });
-    // reset currentPage on filter change
-    saveCurrentPage(1);
-  };
+  const handleToggleFilter = useCallback(
+    (filterName: FilterEnum) => {
+      if (filterName === FilterEnum.All) {
+        resetFilters();
+        return;
+      }
+      saveFilters({
+        ...filters,
+        [FilterEnum.All]: false,
+        [filterName]: !filters[filterName],
+      });
+      saveCurrentPage(1);
+    },
+    [filters],
+  );
 
   return (
     <ButtonContainer>
-      {Object.keys(filters).map((filter) => {
+      {filterKeys.map((filterName) => {
         return (
           <Button
-            key={filter}
-            onClick={() => handleToggleFilter(filter as FilterEnum)}
-            $active={filters[filter as FilterEnum]}
+            key={filterName}
+            onClick={() => handleToggleFilter(filterName as FilterEnum)}
+            $active={filters[filterName as FilterEnum]}
           >
-            {filter}
+            {filterName}
           </Button>
         );
       })}
@@ -46,7 +48,7 @@ const ButtonContainer = styled.div`
   gap: 1rem;
 `;
 
-const Button = styled.button<{ $active: boolean }>`
+const Button = styled.button<{ $active?: boolean }>`
   padding: 0.5rem 1rem;
   font-weight: bold;
   border: 2px solid ${(props) => (props.$active ? "#4886a6" : "#c8c8c8")};
