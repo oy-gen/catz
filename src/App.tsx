@@ -1,5 +1,5 @@
-function App() {
-  return <>App works</>;
-}
+import { CatsPage } from "./presentation/CatsPage.tsx";
 
-export default App;
+export default function App() {
+  return <CatsPage />;
+}
