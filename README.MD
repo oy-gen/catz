@@ -1,5 +1,6 @@
 # Cat Gallery Coding Challenge 🐱
 
+
 Create a responsive web application that displays a gallery of cats with filtering capabilities and a detailed view feature.
 
 ![alt text](/design/list.png)
