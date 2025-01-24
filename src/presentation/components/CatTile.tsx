@@ -49,7 +49,7 @@ const Tile = styled.li<{ $image: string }>`
   cursor: pointer;
   list-style: none;
   width: 100%;
-  padding-top: 100%; /* This makes the element square */
+  padding-top: 100%;
 `;
 
 const Chip = styled.div`
