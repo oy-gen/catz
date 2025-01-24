@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { buildFullImageUrl } from "../../business/utils/buildFullImageUrl.ts";
 import styled from "styled-components";
-import { Loading } from "./LoadingStyle.ts";
+import { Loading } from "./styled-components/LoadingStyle.ts";
+import { Chip } from "./styled-components/Chip.ts";
 
 interface Props {
   id: string;
@@ -32,7 +33,7 @@ export const ModalCatContent: React.FC<Props> = ({
             {tag && <Chip>{tag}</Chip>}
             {size && <Chip>{size}</Chip>}
           </InfoWrapper>
-          <Chip $isRed={true} onClick={onClose}>
+          <Chip className="close-button" onClick={onClose}>
             x Close
           </Chip>
         </ChipRow>
@@ -67,14 +68,6 @@ const ChipRow = styled.div`
 const InfoWrapper = styled.div`
   display: flex;
   gap: 1rem;
-`;
-
-const Chip = styled.div<{ $isRed?: boolean }>`
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.2rem;
-  color: white;
-  background-color: ${(props) => (props.$isRed ? "red" : "black")};
-  ${(props) => (props.$isRed ? "cursor: pointer" : "")};
 `;
 
 const Image = styled.img<{ $isLoaded: boolean }>`

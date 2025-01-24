@@ -4,6 +4,7 @@ import { Cat } from "../../business/models/Cat.ts";
 import { FilterEnum } from "../../business/models/FilterEnum.ts";
 import { Modal } from "./Modal.tsx";
 import { ModalCatContent } from "./ModalCatContent.tsx";
+import { Chip } from "./styled-components/Chip.ts";
 
 interface Props {
   cat: Cat;
@@ -23,8 +24,10 @@ export const CatTile: React.FC<Props> = ({ cat }) => {
   return (
     <>
       <Tile key={cat.id} onClick={() => setIsModalOpen(true)} $image={cat.url}>
-        <Chip className="size">{cat.imageSize}</Chip>
-        {firstMatchingTag && <Chip className="tag">{firstMatchingTag}</Chip>}
+        <Chip className="inside-top-left">{cat.imageSize}</Chip>
+        {firstMatchingTag && (
+          <Chip className="inside-bottom-right">{firstMatchingTag}</Chip>
+        )}
       </Tile>
       {isModalOpen && (
         <Modal>
@@ -50,22 +53,4 @@ const Tile = styled.li<{ $image: string }>`
   list-style: none;
   width: 100%;
   padding-top: 100%;
-`;
-
-const Chip = styled.div`
-  border-radius: 0.2rem;
-  padding: 0.2rem 0.5rem;
-  position: absolute;
-  background-color: black;
-  color: white;
-
-  &.size {
-    left: 0.5rem;
-    top: 0.5rem;
-  }
-
-  &.tag {
-    right: 0.5rem;
-    bottom: 0.5rem;
-  }
 `;

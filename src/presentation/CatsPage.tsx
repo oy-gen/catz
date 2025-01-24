@@ -20,7 +20,6 @@ const PageLayout = styled.main`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem 2rem;
   max-width: 800px;
   position: relative;
 `;

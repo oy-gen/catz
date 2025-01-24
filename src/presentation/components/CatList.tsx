@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { CatTile } from "./CatTile.tsx";
 import { useGetCats } from "../../business/hooks/useGetCats.ts";
-import { Loading } from "./LoadingStyle.ts";
+import { Loading } from "./styled-components/LoadingStyle.ts";
 
 export const CatList: React.FC = () => {
   const { cats, isLoading, error } = useGetCats();
