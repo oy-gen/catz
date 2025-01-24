@@ -25,6 +25,7 @@ export const useGetCats = (): {
           ? err.message
           : "An error occurred while fetching cats",
       );
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
