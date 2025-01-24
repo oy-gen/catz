@@ -31,7 +31,7 @@ export const FilterRow: React.FC = () => {
           <Button
             key={filterName}
             onClick={() => handleToggleFilter(filterName as FilterEnum)}
-            $active={filters[filterName as FilterEnum]}
+            $isActive={filters[filterName as FilterEnum]}
           >
             {filterName}
           </Button>
@@ -48,12 +48,12 @@ const ButtonContainer = styled.div`
   gap: 1rem;
 `;
 
-const Button = styled.button<{ $active?: boolean }>`
+const Button = styled.button<{ $isActive?: boolean }>`
   padding: 0.5rem 1rem;
   font-weight: bold;
-  border: 2px solid ${(props) => (props.$active ? "#4886a6" : "#c8c8c8")};
+  border: 2px solid ${(props) => (props.$isActive ? "#4886a6" : "#c8c8c8")};
   border-radius: 0.5rem;
-  background-color: ${(props) => (props.$active ? "#dcdcdc" : "white")};
+  background-color: ${(props) => (props.$isActive ? "#dcdcdc" : "white")};
   color: #3e3e3e;
   cursor: pointer;
   transition: background-color 0.25s;
