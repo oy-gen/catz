@@ -62,10 +62,6 @@ const Button = styled.button<{ $active?: boolean }>`
     opacity: 0.9;
   }
 
-  &:active {
-    border-color: aqua;
-  }
-
   &:disabled {
     filter: grayscale(100);
   }
