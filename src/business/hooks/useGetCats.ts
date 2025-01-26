@@ -3,13 +3,19 @@ import { Cat } from "../models/Cat.ts";
 import { fetchCats } from "../../api/fetchCats.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
 import { parseRawCatData } from "../utils/parseRawCatData.ts";
+import { catsSelector } from "../../store/selectors/catsSelector.ts";
+import { filterSelector } from "../../store/selectors/filterSelector.ts";
+import { pageSelector } from "../../store/selectors/pageSelector.ts";
 
 export const useGetCats = (): {
   cats: Cat[];
   error: string | null;
   isLoading: boolean;
 } => {
-  const { cats, saveCats, filters, currentPage } = useCatsStore();
+  const { filters } = useCatsStore(filterSelector);
+  const { currentPage } = useCatsStore(pageSelector);
+  const { cats, saveCats } = useCatsStore(catsSelector);
+
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

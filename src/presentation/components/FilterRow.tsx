@@ -2,10 +2,14 @@ import styled from "styled-components";
 import React, { useCallback, useMemo } from "react";
 import { FilterEnum } from "../../business/models/FilterEnum.ts";
 import { useCatsStore } from "../../store/useCatsStore.ts";
+import { useShallow } from "zustand/react/shallow";
+import { filterSelector } from "../../store/selectors/filterSelector.ts";
 
 export const FilterRow: React.FC = () => {
-  const { filters, saveFilters, resetFilters, saveCurrentPage } =
-    useCatsStore();
+  const { filters, saveFilters, resetFilters } = useCatsStore(
+    useShallow(filterSelector),
+  );
+
   const filterKeys: string[] = useMemo(() => Object.keys(filters), [filters]);
 
   const handleToggleFilter = useCallback(
@@ -19,11 +23,10 @@ export const FilterRow: React.FC = () => {
         [FilterEnum.All]: false,
         [filterName]: !filters[filterName],
       });
-      saveCurrentPage(1);
     },
     [filters],
   );
-
+  console.log("FilterRow called");
   return (
     <ButtonContainer>
       {filterKeys.map((filterName) => {
