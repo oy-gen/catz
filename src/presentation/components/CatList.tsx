@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import React from "react";
 import { CatTile } from "./CatTile.tsx";
-import { useGetCats } from "../../business/hooks/useGetCats.ts";
+import { useFetchCats } from "../../business/hooks/useFetchCats.ts";
 import { Loading } from "./styled-components/LoadingStyle.ts";
+import { useCatsStore } from "../../store/useCatsStore.ts";
+import { catsSelector } from "../../store/selectors/catsSelector.ts";
 
 export const CatList: React.FC = () => {
-  const { cats, isLoading, error } = useGetCats();
+  const { isLoading, error } = useFetchCats();
+  const { cats } = useCatsStore(catsSelector);
 
   if (isLoading) {
     return <Loading>Loading ...</Loading>;

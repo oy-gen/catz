@@ -26,7 +26,7 @@ export const FilterRow: React.FC = () => {
     },
     [filters],
   );
-  console.log("FilterRow called");
+
   return (
     <ButtonContainer>
       {filterKeys.map((filterName) => {

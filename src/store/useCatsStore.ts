@@ -30,6 +30,7 @@ const useStore = create<CatsStoreState>()(
       resetFilters: () => {
         set({
           filters: filtersInitialState,
+          currentPage: 1,
         });
       },
     }),
